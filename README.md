@@ -3,17 +3,19 @@
 ## Description
 
 Ces fichiers constituent le code source qui a servi pour le site
-[fouille.twinpedia.com](fouille.twinpedia.com) qui permet de générer
-des « grilles de fouilles » pour une des épreuves de l'animation «
-[Les 24 Heures de Hordes](http://twd.io/e/Ry7G0w/0) » (H-24).
+[fouille.twinpedia.com](http://fouille.twinpedia.com/) qui permettait
+de générer des « grilles de fouilles » pour une des épreuves de
+l'animation « [Les 24 Heures de Hordes](http://twd.io/e/Ry7G0w/0) »
+(H-24) en septembre 2015.
 
-Ces grilles à poster sur le forum sont constituées d'icônes ou de
-textes cachant des liens vers diverses images ou pages dont une seule
-est « gagnante ».  Les joueurs doivent suivre les liens et découvrir
-quelle est cette case gagnante dans la grille.  Les liens sont des
-liens de redirection et cachent leur destination réelle pour qu'un
-joueur ne puisse pas trouver la case gagnante rien qu'en examinant les
-liens dans le code source du message.
+L'épreuve « [Poser ses Fouilles sur la table](http://twd.io/e/8-TN0w)
+» utilisait des grilles à poster sur le forum, constituées d'icônes ou
+de textes cachant des liens vers diverses images ou pages dont une
+seule était « gagnante ».  Les joueurs devaient suivre les liens et
+découvrir quelle était cette case gagnante dans la grille.  Les liens
+étaient des liens de redirection et cachaient leur destination réelle
+pour qu'un joueur ne puisse pas trouver la case gagnante rien qu'en
+examinant les liens dans le code source du message.
 
 ## Copyrights
 
@@ -24,7 +26,11 @@ Les images `images\tango-*.png` font partie du projet Tango.  Elles
 Attribution-ShareAlike » mais sont dans le domaine public depuis 2009.
 
 Sauf mention contraire, tout le reste du site et de ses images sont
-sous la license **Affero GPL 3.0**.  Voir le fichier `LICENSE`.
+sous la license **GNU Affero GPL 3.0**.  La principale différence par
+rapport à la license GPL 3.0 classique est l'obligation de rendre le
+code source disponible (ici, les fichiers PHP et autres) lorsqu'on
+utilise ce code pour offrir un service en ligne.  Pour plus de
+détails, voir le fichier `LICENSE`.
 
 ## Informations pour les développeurs
 
