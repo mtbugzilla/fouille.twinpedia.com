@@ -6,72 +6,76 @@ include_once('include/header.php');
 <h2>Liste des utilisateurs</h2>
 
 <?php
-  $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-  if (! $mysqli->set_charset('utf8')) {
-    printf("Erreur pour passer en utf8: %s\n", $mysqli->error);
-    exit;
-  }
-  $sql = "SELECT * FROM users";
-  if (isset($_GET['s'])) {
-    $sql .= " ORDER BY " . $mysqli->real_escape_string($_GET['s']);
-  }
-  if (isset($_GET['sd'])) {
-    $sql .= " ORDER BY " . $mysqli->real_escape_string($_GET['sd']) . " DESC";
-  }
-  $result = $mysqli->query($sql);
-  if (isset($_GET['f']) && $_GET['f'] == 'raw') {
-    echo "<pre>\n";
-    print_r($result);
-    while ($row = $result->fetch_assoc()) {
-      print_r($row);
+  if (isset($_SESSION['uid']) && ($_SESSION['role'] >= ROLE_DEVEL)) {
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    if (! $mysqli->set_charset('utf8')) {
+     printf("Erreur pour passer en utf8: %s\n", $mysqli->error);
+     exit;
     }
-    echo "</pre>\n";
+    $sql = "SELECT * FROM users";
+    if (isset($_GET['s'])) {
+      $sql .= " ORDER BY " . $mysqli->real_escape_string($_GET['s']);
+    }
+    if (isset($_GET['sd'])) {
+      $sql .= " ORDER BY " . $mysqli->real_escape_string($_GET['sd']) . " DESC";
+    }
+    $result = $mysqli->query($sql);
+    if (isset($_GET['f']) && $_GET['f'] == 'raw') {
+      echo "<pre>\n";
+      print_r($result);
+      while ($row = $result->fetch_assoc()) {
+        print_r($row);
+      }
+      echo "</pre>\n";
+    } else {
+      echo "<table class=\"users\"><tbody>\n";
+      echo "<tr><th colspan=\"2\">Nom</th><th>Role</th><th>Enregistré</th><th>Modifié</th><th>Accès</th><th>Fouille</th></tr>\n";
+      while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        if ($row['avatar']) {
+          echo "<td><a href=\"http://twinoid.com/user/" . $row['uid'] . "\" target=\"_blank\"><img src=\"" . $row['avatar'] . "\" style=\"max-width: 40px; max-height: 40px;\" /></a></td>";
+        } else {
+          echo "<td>?</td>";
+        }
+        if ($row['name']) {
+          echo "<td><a href=\"http://twinoid.com/user/" . $row['uid'] . "\" target=\"_blank\">" . $row['name'] . "</td>";
+        } else {
+          echo "<td>?</td>";
+        }
+        if ($row['role']) {
+          echo "<td>" . $row['role'] . "</td>";
+        } else {
+          echo "<td>-</td>";
+        }
+        if ($row['ctime']) {
+          echo "<td>" . $row['ctime'] . "</td>";
+        } else {
+          echo "<td>-</td>";
+        }
+        if ($row['mtime']) {
+          echo "<td>" . $row['mtime'] . "</td>";
+        } else {
+          echo "<td>-</td>";
+        }
+        if ($row['atime']) {
+          echo "<td>" . $row['atime'] . "</td>";
+        } else {
+          echo "<td>-</td>";
+        }
+        if ($row['digtime']) {
+          echo "<td>" . $row['digtime'] . "</td>";
+        } else {
+          echo "<td>-</td>";
+        }
+        echo "</tr>\n";
+      }
+      echo "</tbody></table>\n";
+    }
+    $result->free();
+    $mysqli->close();
   } else {
-    echo "<table class=\"users\"><tbody>\n";
-    echo "<tr><th colspan=\"2\">Nom</th><th>Role</th><th>Enregistré</th><th>Modifié</th><th>Accès</th><th>Fouille</th></tr>\n";
-    while ($row = $result->fetch_assoc()) {
-      echo "<tr>";
-      if ($row['avatar']) {
-        echo "<td><a href=\"http://twinoid.com/user/" . $row['uid'] . "\" target=\"_blank\"><img src=\"" . $row['avatar'] . "\" style=\"max-width: 40px; max-height: 40px;\" /></a></td>";
-      } else {
-        echo "<td>?</td>";
-      }
-      if ($row['name']) {
-        echo "<td><a href=\"http://twinoid.com/user/" . $row['uid'] . "\" target=\"_blank\">" . $row['name'] . "</td>";
-      } else {
-        echo "<td>?</td>";
-      }
-      if ($row['role']) {
-        echo "<td>" . $row['role'] . "</td>";
-      } else {
-        echo "<td>-</td>";
-      }
-      if ($row['ctime']) {
-        echo "<td>" . $row['ctime'] . "</td>";
-      } else {
-        echo "<td>-</td>";
-      }
-      if ($row['mtime']) {
-        echo "<td>" . $row['mtime'] . "</td>";
-      } else {
-        echo "<td>-</td>";
-      }
-      if ($row['atime']) {
-        echo "<td>" . $row['atime'] . "</td>";
-      } else {
-        echo "<td>-</td>";
-      }
-      if ($row['digtime']) {
-        echo "<td>" . $row['digtime'] . "</td>";
-      } else {
-        echo "<td>-</td>";
-      }
-      echo "</tr>\n";
-    }
-    echo "</tbody></table>\n";
+    echo "<p class=\"error_box\">Desolé, vous n'avez pas accès à ces informations.</p>\n";
   }
-  $result->free();
-  $mysqli->close();
 ?>
 
 <h2>Explications</h2>
